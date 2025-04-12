@@ -1,84 +1,97 @@
-# HDM Todo List Application
+## HDM Todo List Application
 
 ---
 
-## Technologies utilisées
+### Technologies utilisées
 
-- **Frontend** : React + TypeScript avec Material-UI pour une interface moderne, fluide et responsive.  
-- **Backend** : NestJS pour sa structure modulaire et maintenable.  
-- **Base de données** : MySQL, avec Prisma pour gérer les requêtes et migrations simplement.  
-- **Outils** : Docker (pour MySQL), Prisma (ORM), GitHub (versioning), ESLint + Prettier (formatage).
-
----
-
-## Choix techniques et décisions
-
-### Architecture du projet
-
-- Le backend NestJS est structuré en modules pour une séparation claire des responsabilités (contrôleurs, services, use cases).
-- Le frontend React permet une interface interactive et facile à maintenir.
-- Prisma simplifie l’interaction avec la base de données grâce à son typage automatique et ses migrations.
-
-### Gestion des tâches (CRUD)
-
-- Les tâches peuvent être créées, lues, modifiées et supprimées via une API REST.
-- Une UseCaseFactory est utilisée pour centraliser la logique métier et faciliter l’ajout de nouvelles fonctionnalités.
-
-### Fonctionnalité bonus (non implémentée)
-
-Par manque de temps lié à mes obligations académiques, je n’ai pas pu finaliser une fonctionnalité prévue :  
-Un bouton "Terminer" devait permettre de marquer une tâche comme complétée, avec un affichage visuel différencié.
-
-Cette fonctionnalité aurait enrichi l'expérience utilisateur en ajoutant une gestion d'état simple des tâches.
+- **Frontend** : React avec TypeScript et Material-UI pour une interface moderne et intuitive.
+- **Backend** : NestJS pour sa modularité et sa structure claire.
+- **Base de données** : MySQL, avec Prisma pour simplifier la gestion des données.
+- **Outils** : Docker pour la base de données, GitHub pour le versionnement, et Prisma pour gérer les migrations.
 
 ---
 
-## Défis rencontrés et solutions apportées
+### Choix techniques et décisions
 
-### 1. Dépendances et UseCaseFactory
+#### 1. Organisation du projet
 
-Des erreurs bloquantes liées à l'injection de dépendances dans la UseCaseFactory.
+- J'ai opté pour NestJS côté backend pour sa structure en modules qui permet une séparation claire entre les responsabilités.
+- Sur le frontend, React m'a permis de construire une interface utilisateur dynamique et facile à maintenir.
+- Prisma a été un excellent choix pour simplifier la connexion et les requêtes vers MySQL.
 
-**Solution** : Correction des types et ajustement des imports pour une compatibilité complète entre modules.
+#### 2. Gestion des tâches (CRUD)
 
-### 2. Synchronisation Prisma et MySQL
+- Les tâches peuvent être créées, lues, mises à jour et supprimées grâce aux endpoints REST du backend.
+- L'utilisation d'une **UseCaseFactory** rend l'application extensible en facilitant l'ajout de nouvelles fonctionnalités sans perturber l'existant.
 
-Prisma ne reconnaissait pas certaines modifications de schéma.
+#### 3. BONUS : Fonctionnalité supplémentaire
 
-**Solution** : Réinitialisation des migrations et insertion de données fictives pour valider le bon fonctionnement de l'application.
+À cause d'une contrainte de temps et de mon emploi chargé avec les cours, je n'ai pas réussi à ajouter la possibilité de marquer une tâche comme terminée :
+- Un bouton "Terminer" devait permettre de changer l'état d'une tâche.
+- Les tâches terminées seraient visuellement différenciées des autres.
 
-### 3. Problèmes d’URL entre le frontend et le backend
-
-L’API n’était pas correctement atteinte depuis le frontend.
-
-**Solution** : Ajout de la variable `VITE_API_BASE_URL` dans `.env` pour pointer dynamiquement vers l’API.
-
-### 4. Validations côté backend
-
-Certaines requêtes échouaient faute de validations sur les entrées.
-
-**Solution** : Ajout de validations dans les DTOs (Data Transfer Objects) côté NestJS.
+Cette fonctionnalité aurait enrichi l'expérience utilisateur en ajoutant une gestion simple des statuts des tâches.
 
 ---
 
- Instructions pour tester l'application
+### Défis rencontrés et solutions
 
-1. **Backend** :
+#### 1. UseCaseFactory et dépendances
 
- - Configurez le fichier `.env` avec vos informations MySQL (`DATABASE_URL`).
- - Lancez le serveur avec la commande :
+Certaines erreurs liées à la déclaration des dépendances ont bloqué les fonctionnalités.  
+**Solution** : J'ai revu les types et l'injection des dépendances pour garantir une compatibilité entre les composants.
+
+#### 2. Synchronisation de la base de données
+
+Un problème est survenu avec Prisma lors de la synchronisation du schéma avec la base de données.  
+**Solution** : J'ai réinitialisé les migrations et ajouté des données fictives pour tester l'application.
+
+#### 3. Appels API frontend-backend
+
+Des erreurs sont apparues à cause de mauvaises configurations des URLs API.  
+**Solution** : Ajout de la variable `VITE_API_BASE_URL` pour pointer correctement vers le backend depuis le frontend.
+
+#### 4. Validation des données
+
+Le backend rejetait certaines requêtes en raison d'un manque de validation.  
+**Solution** : Ajout de validations dans les DTOs (Data Transfer Objects) et contrôle côté backend.
+
+#### 5. Problèmes d'intégration Prettier
+
+Prettier a généré des erreurs de formatage dues à des configurations non adaptées à certaines parties du code.  
+**Solution** : J'ai corrigé la configuration d'ESLint et Prettier pour mieux aligner les règles sur la structure du projet, et réorganisé certaines lignes de code pour éviter des erreurs de style.
+
+---
+
+## Instructions pour tester l'application
+
+### 1. **Backend** :
+- Configurez le fichier `.env` avec vos informations MySQL (`DATABASE_URL`).
+- Lancez le serveur avec la commande :
 
 ```bash
 yarn start:dev
+```
 
-2. **Frontend** :
-   - Ajoutez la variable VITE_API_BASE_URL dans le fichier .env pour pointer vers le backend.
-   - Lancez le frontend avec yarn dev.
-   - Accédez à l'application via http://localhost:5173.
+### 2. **Frontend** :
+- Ajoutez la variable `VITE_API_BASE_URL` dans le fichier `.env` pour pointer vers le backend.
+- Lancez le frontend avec la commande :
 
-3. **Base de données** :
-   - Synchronisez le schéma avec npx prisma db push.
-   - Insérez des données test directement via MySQL ou le script fourni.
+```bash
+yarn dev
+```
+
+- Accédez à l'application via [http://localhost:5173](http://localhost:5173)
+
+### 3. **Base de données** :
+- Synchronisez le schéma avec :
+
+```bash
+npx prisma db push
+```
+
+- Insérez des données test directement via MySQL ou le script fourni.
+
 ---
 
-Merci de m'avoir donné cette opportunité, et au plaisir de discuter de ce projet avec vous ! 
+Merci pour cette expérience enrichissante. Je suis disponible pour discuter plus en détail du projet si besoin.
