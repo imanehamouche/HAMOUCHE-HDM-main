@@ -56,11 +56,6 @@ Des erreurs sont apparues à cause de mauvaises configurations des URLs API.
 Le backend rejetait certaines requêtes en raison d'un manque de validation.  
 **Solution** : Ajout de validations dans les DTOs (Data Transfer Objects) et contrôle côté backend.
 
-#### 5. Problèmes d'intégration Prettier
-
-Prettier a généré des erreurs de formatage dues à des configurations non adaptées à certaines parties du code.  
-**Solution** : J'ai corrigé la configuration d'ESLint et Prettier pour mieux aligner les règles sur la structure du projet, et réorganisé certaines lignes de code pour éviter des erreurs de style.
-
 ---
 
 ## Instructions pour tester l'application
@@ -94,4 +89,4 @@ npx prisma db push
 
 ---
 
-Merci pour cette expérience enrichissante. Je suis disponible pour discuter plus en détail du projet si besoin.
+Merci pour cette expérience enrichissante !
