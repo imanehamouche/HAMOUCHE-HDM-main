@@ -61,12 +61,24 @@ Certaines requêtes échouaient faute de validations sur les entrées.
 
 ---
 
-## Instructions pour tester l'application
+ Instructions pour tester l'application
 
-### Backend
+1. **Backend** :
 
-1. Configurez le fichier `.env` avec vos informations MySQL (`DATABASE_URL`).
-2. Lancez le serveur avec la commande :
+ - Configurez le fichier `.env` avec vos informations MySQL (`DATABASE_URL`).
+ - Lancez le serveur avec la commande :
 
 ```bash
 yarn start:dev
+
+2. **Frontend** :
+   - Ajoutez la variable VITE_API_BASE_URL dans le fichier .env pour pointer vers le backend.
+   - Lancez le frontend avec yarn dev.
+   - Accédez à l'application via http://localhost:5173.
+
+3. **Base de données** :
+   - Synchronisez le schéma avec npx prisma db push.
+   - Insérez des données test directement via MySQL ou le script fourni.
+---
+
+Merci de m'avoir donné cette opportunité, et au plaisir de discuter de ce projet avec vous ! 
